@@ -1,7 +1,8 @@
-import LoginForm from '../components/LoginForm'
+import ProtectRoute from "@/components/ProtectRoute";
+
 const Home = () => {
     return (
-        <LoginForm />
+        <ProtectRoute/>
     )
 }
 
