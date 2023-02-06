@@ -9,10 +9,11 @@ interface IProps {
 
 const BaseLayout = ({children, title}: IProps) => {
     return (
-        <ProtectRoute>
+        <>
+            <ProtectRoute/>
             <Menu/>
             {children}
-        </ProtectRoute>
+        </>
     )
 }
 

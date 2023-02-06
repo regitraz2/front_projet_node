@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+module.exports = {
+    async headers() {
+        return [
+            {
+                key: 'http-authorization',
+                value: localStorage.getItem('ACCESS_TOKEN'),
+            },
+            {key: "Access-Control-Allow-Origin", value: process.env.NEXT_PUBLIC_API_URL},
 
-module.exports = nextConfig
+        ]
+    },
+    reactStrictMode: true,
+}

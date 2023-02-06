@@ -1,30 +1,26 @@
 import {useState} from "react";
 import {useRouter} from "next/router";
 import * as process from "process";
+import axios from "axios";
 
 const LoginForm = () => {
     const [error, setError] = useState<string | undefined>(undefined)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const router = useRouter()
 
     const login = async (email: string, password: string) => {
         setError(undefined)
-        
-        return await fetch(process.env.NEXT_PUBLIC_API_URL + '/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email, password}),
-        })
+
+        return axios.post(
+            process.env.NEXT_PUBLIC_API_URL + '/login',
+            {email, password}
+        )
             .then((res) => {
                 console.log('res data : ', res)
-                return res
+                return res.data
             })
             .then((res) => {
                 // Set the access token in the local storage
-                // localStorage.setItem('ACCESS_TOKEN', res.token)
+                localStorage.setItem('ACCESS_TOKEN', res.token)
             })
             .then(() => router.push('/dashboard'))
             .catch((err) => {
