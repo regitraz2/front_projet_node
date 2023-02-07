@@ -4,7 +4,7 @@ const Dashboard = () => {
     return (
         <>
             <BaseLayout title={"Dashboard"}>
-                <div>Dahboard</div>
+               
             </BaseLayout>
         </>
     )
