@@ -13,7 +13,7 @@ const UserList = () => {
     const [searchCategory, setSearchCategory] = useState("");
     let newFilterUsers = [];
 
-    const setSearchUser = (searchBy) => {
+    const setSearchUser = (searchBy: string) => {
         console.log(searchBy)
         setSearchBy(searchBy)
 
@@ -39,6 +39,7 @@ const UserList = () => {
     const setSearchNameUsers = async (searchTerm: string) => {
         const Newusers = newUsers.filter((user) => {
             console.log(searchBy)
+            // @ts-ignore
             return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
         });
         setUsers(Newusers)
@@ -76,7 +77,7 @@ const UserList = () => {
     const [name, setName] = useState("");
     return (
         <BaseLayout title={"Users"}>
-            <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-col text-dark items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <h1 className="text-3xl font-medium">Liste des collaborateurs</h1>
                 <div className="flex items-center px-4 py-3 bg-white border-b border-gray-200">
                     <input
@@ -109,7 +110,7 @@ const UserList = () => {
 
 
                     <div className="flex flex-wrap justify-center">
-                        {users.map((user) => (
+                        {users.map((user: IUser) => (
                             <UserCard key={user.id} user={user}/>
                         ))}
                     </div>
