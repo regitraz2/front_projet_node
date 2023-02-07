@@ -18,7 +18,6 @@ const LoginForm = () => {
             {email, password}
         )
             .then((res) => {
-                console.log('res data : ', res)
                 return res.data
             })
             .then((res) => {

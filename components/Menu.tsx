@@ -5,8 +5,6 @@ import * as process from "process";
 const Menu = () => {
     const user = useRecoilValue(authUser)
 
-    console.log('users : ', user)
-
     return (
         <>
             <nav className="bg-white shadow-lg">

@@ -1,18 +1,20 @@
 import BaseLayout from "@/components/BaseLayout";
-import {UserCard} from "@/pages/users";
 import axios from "axios";
 import * as process from "process";
 
 const Dashboard = () => {
-
-    const user = axios.get(process.env.NEXT_PUBLIC_API_URL + "/randomUser").then((response) => response.data);
+    const user = axios.get(process.env.NEXT_PUBLIC_API_URL + "/randomUser", {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+        }
+    }).then(res => res.data);
 
     console.log(user);
 
     return (
         <>
             <BaseLayout title={"Dashboard"}>
-                <UserCard user={user}/>
+                {/*<UserCard user={user}/>*/}
             </BaseLayout>
         </>
     )

@@ -3,7 +3,6 @@ import {useRouter} from "next/router";
 
 export async function getStaticProps() {
     const isAuthenticated = localStorage.getItem('ACCESS_TOKEN') !== null
-    console.log('isAuthenticated : ', isAuthenticated)
 }
 
 const ProtectRoute = ({children}: any) => {
