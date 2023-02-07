@@ -1,50 +1,76 @@
-import {useState} from "react";
-
+import { useEffect, useState } from "react";
+import { IUser } from "@/interfaces/IUser";
+import * as process from "process";
+import axios from "axios";
+import UserCard from "@/components/UserCard";
 
 const UserList = () => {
 
-    let users = [
-        {
-            id: 1,
-            name: "John Doe",
-            email: "john.doe@example.com",
-            address: "123 Main Street, Anytown USA 12345",
-            imageId: "johndoe123",
-            role: "Admin"
-        },
-        {
-            id: 2,
-            name: "Jane Doe",
-            email: "jane.doe@example.com",
-            address: "456 Elm Street, Anytown USA 12345",
-            imageId: "janedoe456",
-            role: "Moderator"
-        },
-        {
-            id: 2,
-            name: "Jane Doe",
-            email: "jane.doe@example.com",
-            address: "456 Elm Street, Anytown USA 12345",
-            imageId: "janedoe456",
-            role: "Moderator"
-        },
-        {
-            id: 2,
-            name: "Jane Doe",
-            email: "jane.doe@example.com",
-            address: "456 Elm Street, Anytown USA 12345",
-            imageId: "janedoe456",
-            role: "Marketting"
-        },
-        // Etc.
-    ];
-    const [searchName, setSearchName] = useState("");
+    const [users, setUsers] = useState([]);
+    const [newUsers, setNewUsers] = useState([]);
+    const [searchBy, setSearchBy] = useState("firstname");
     const [searchCategory, setSearchCategory] = useState("");
-    const setSearchCategoryUsers = (category: string) => {
-        users = users.filter(user => user.role === category);
-        console.log(users)
+    let newFilterUsers = [];
+
+    const setSearchUser = (searchBy) => {
+        console.log(searchBy)
+        setSearchBy(searchBy)
 
     };
+
+    const setSearchCategoryUsers = async (category: string) => {
+        if (category != "Toutes les catégories") {
+     
+                    if (category != "Toutes les catégories") {
+
+                        newFilterUsers = newUsers.filter((user: IUser) => {
+                            return user.category === category
+                        })
+                        setUsers(newFilterUsers)
+                    }
+                
+
+    }else{
+       await getUsers()
+    }
+    }
+
+    const setSearchNameUsers = async (searchTerm: string) => {
+        const Newusers = newUsers.filter((user) => {
+            console.log(searchBy)
+            return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        setUsers(Newusers)
+    };
+
+
+    const getUsers = async () => {
+        const instance = axios.create({
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer test`
+            }
+        });
+
+
+        await instance.get(
+            process.env.NEXT_PUBLIC_API_URL + '/users',
+        )
+            .then((res) => {
+                setNewUsers(
+                    res.data
+                )
+                setUsers(res.data);
+                return res.data
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     const [name, setName] = useState("");
     return (
@@ -55,33 +81,34 @@ const UserList = () => {
                     className="flex-1 px-4 py-2 mr-4 rounded-lg border border-gray-400"
                     type="text"
                     placeholder="Rechercher par nom..."
-                    onChange={e => setSearchName(e.target.value)}
+                    onChange={e => setSearchNameUsers(e.target.value)}
                 />
                 <select
                     className="px-4 py-2 mr-4 rounded-lg border border-gray-400"
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setSearchUser(e.target.value)}
                 >
-                    <option>Tous les noms</option>
-                    {users.map(user => (
-                        <option key={user.id}>{user.name}</option>
-                    ))}
+                 
+                        <option>firstname</option>
+                        <option>city</option>
+
+               
                 </select>
                 <select
                     className="px-4 py-2 rounded-lg border border-gray-400"
                     onChange={e => setSearchCategoryUsers(e.target.value)}
                 >
                     <option>Toutes les catégories</option>
-                    <option>Admin</option>
-                    <option>Modérateur</option>
-                    <option>Utilisateur</option>
+                    <option>Marketing</option>
+                    <option>Technique</option>
+                    <option>Client</option>
                 </select>
             </div>
             <div className="flex flex-col items-center">
 
 
                 <div className="flex flex-wrap justify-center">
-                    {users.map((user: { id: any; name: any; email: any; address: any; role: any; imageId: any }) => (
-                        <UserCard key={user.id} user={user}/>
+                    {users.map((user) => (
+                        <UserCard key={user.id} user={user} />
                     ))}
                 </div>
             </div>
