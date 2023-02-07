@@ -14,7 +14,7 @@ const Menu = () => {
                     <div className="flex justify-between">
                         <div className="flex space-x-7">
                             <div>
-                                <a href="/dashboard"
+                                <a href="/"
                                    className="flex items-center py-4 px-2">
                                     <span
                                         className={'font-semibold text-gray-500 text-lg'}>{process.env.NEXT_PUBLIC_APP_NAME}</span>
@@ -57,7 +57,7 @@ const Menu = () => {
                 <div className="hidden mobile-menu">
                     <ul className="">
                         <li className="active">
-                            <a href="dashboard"
+                            <a href="/"
                                className="block text-sm px-2 py-4 text-white bg-primary-600 font-semibold">Home
                             </a>
                         </li>
