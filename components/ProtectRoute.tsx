@@ -1,20 +1,30 @@
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
-const ProtectRoute = () => {
+export async function getStaticProps() {
+    const isAuthenticated = localStorage.getItem('ACCESS_TOKEN') !== null
+    console.log('isAuthenticated : ', isAuthenticated)
+}
+
+const ProtectRoute = ({children}: any) => {
     const router = useRouter()
-    const [isAuthenticated, setIsAuthenticated] = useState(true)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     useEffect(() => {
-        setIsAuthenticated(localStorage.getItem('ACCESS_TOKEN') !== null)
+        console.log('isAuthenticated : ', localStorage.getItem('ACCESS_TOKEN') === null)
 
-        console.log('isAuthenticated : ', isAuthenticated)
-        if (!isAuthenticated) {
+        if (localStorage.getItem('ACCESS_TOKEN') === null && router.pathname !== '/auth/login') {
             router.push('/auth/login')
+        } else {
+            setIsAuthenticated(true)
         }
-    })
 
-    return null
+    }, [])
+
+    if (router.pathname === '/auth/login' || isAuthenticated)
+        return children
+    else
+        return <div>Loading</div>
 }
 
 export default ProtectRoute

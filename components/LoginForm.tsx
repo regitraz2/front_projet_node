@@ -6,6 +6,7 @@ import axios from "axios";
 const LoginForm = () => {
     const [error, setError] = useState<string | undefined>(undefined)
     const router = useRouter()
+    // const [user, setUser] = useRecoilState('user');
 
     const login = async (email: string, password: string) => {
         setError(undefined)
@@ -20,6 +21,7 @@ const LoginForm = () => {
             })
             .then((res) => {
                 // Set the access token in the local storage
+                // setUser(res.user)
                 localStorage.setItem('ACCESS_TOKEN', res.token)
             })
             .then(() => router.push('/dashboard'))
