@@ -11,8 +11,6 @@ const ProtectRoute = ({children}: any) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     useEffect(() => {
-        console.log('isAuthenticated : ', localStorage.getItem('ACCESS_TOKEN') === null)
-
         if (localStorage.getItem('ACCESS_TOKEN') === null && router.pathname !== '/auth/login') {
             router.push('/auth/login')
         } else {

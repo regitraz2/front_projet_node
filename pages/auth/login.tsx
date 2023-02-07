@@ -1,8 +1,11 @@
 import LoginForm from "@/components/LoginForm";
+import BaseLayout from "@/components/BaseLayout";
 
 const Home = () => {
     return (
-        <LoginForm/>
+        <BaseLayout title={'Connexion'}>
+            <LoginForm/>
+        </BaseLayout>
     )
 }
 
