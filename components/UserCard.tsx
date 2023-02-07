@@ -1,17 +1,60 @@
 import {IUser} from "@/interfaces/IUser";
+import DateDiff from "date-diff";
+import {FunctionComponent} from 'react'
+import Image from "next/image";
 
-const UserCard = (user: IUser) => {
+interface IProps {
+    user: IUser
+}
+
+const UserCard: FunctionComponent<IProps> = ({user}) => {
+    console.log(user);
+
     return (
-        <div className="flex items-center justify-center p-6 bg-white rounded-lg m-4">
-            <img className="w-32 h-32 mr-6 bg-cover bg-center rounded-full"
-                 src={`https://randomuser.me/api/portraits/men/40.jpg`}/>
-            <div className="flex-1">
-                <h2 className="text-lg font-medium">{user.name}</h2>
-                <p className="text-gray-700">Email: {user.email}</p>
-                <p className="text-gray-700">Adresse: {user.address}</p>
+        <div className="max-w-md py-4 px-8 m-4 bg-white shadow-lg rounded-lg my-20">
+            <div className="flex justify-start md:justify-start text-red-700 text-xl">{user.category}</div>
+
+            <div className="flex justify-center md:justify-end -mt-16">
+                <img className="w-20 h-20 object-cover rounded-full border-2 border-indigo-500"
+                     src={user.photo}/>
             </div>
-            <div className="flex items-center">
-                <span className="px-3 py-2 bg-indigo-500 text-white text-xs font-medium rounded-full">{user.role}</span>
+
+            <div>
+                <h2 className="text-gray-800 text-3xl font-semibold">{user.firstname + " " + user.lastname +
+                    " (" + new DateDiff(new Date(), new Date(user.birthdate)).years().toFixed() + " ans)"}</h2>
+            </div>
+            <div
+                className="flex justify-start text-sm md:justify-start text-black">{user.city + ", " + user.country}</div>
+
+            <div className="flex justify-start md:justify-start mt-4 text-black">
+                <Image
+                    src={"/email.svg"}
+                    height={20}
+                    width={20}
+                    alt={""}
+                    className={"mr-1"}
+                />
+                {user.email}
+            </div>
+            <div className="flex justify-start md:justify-start text-black">
+                <Image
+                    src={"/phone.svg"}
+                    height={20}
+                    width={20}
+                    alt={""}
+                    className={"mr-1"}
+                />
+                {user.phone}
+            </div>
+            <div className="flex justify-start md:justify-start text-black">
+                <Image
+                    src={"/cake.svg"}
+                    height={20}
+                    width={20}
+                    alt={""}
+                    className={"mr-1"}
+                />
+                {"Anniversaire : " + new Date(user.birthdate).toDateString()}
             </div>
         </div>
     )
