@@ -26,7 +26,7 @@ const LoginForm = () => {
                 setAuthUser(res.user)
                 localStorage.setItem('ACCESS_TOKEN', res.token)
             })
-            .then(() => router.push('/dashboard'))
+            .then(() => router.push('/'))
             .catch((err) => {
                 console.log('err : ', err)
             })
