@@ -7,7 +7,9 @@ export interface IUser {
     birthdate: string
     city: string
     country: string
-    photo: string
     category: string
-    isAdmin: boolean
+    photo?: string
+    isAdmin?: boolean
+    password?: string
+    gender?: string
 }

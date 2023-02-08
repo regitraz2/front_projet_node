@@ -3,15 +3,33 @@ import {IUser} from "@/interfaces/IUser";
 
 interface IProps {
     user?: IUser;
-    action: string
 }
 
-const UserAddForm: FunctionComponent<IProps> = ({user, action}) => {
+const UserAddForm: FunctionComponent<IProps> = ({user}) => {
+    const addUser = async (e: any) => {
+        e.preventDefault()
+        const data = {
+            email: e.target.email.value,
+            password: e.target.password.value,
+            firstname: e.target.firstname.value,
+            lastname: e.target.lastname.value,
+            country: e.target.country.value,
+            city: e.target.city.value,
+            category: e.target.category.value,
+            gender: e.target.gender.value,
+            birthdate: e.target.birthdate.value,
+            phone: e.target.phone.value,
+            photo: e.target.photo.value,
+            isAdmin: e.target.isAdmin.value,
+        }
+
+        addUser(data)
+    }
 
     return (
         <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div className="block p-6 rounded-lg shadow-lg bg-white">
-                <form action={action} className={"w-96"}>
+                <form onSubmit={addUser} className={"w-96"}>
                     <div className="form-group mb-3">
                         <label htmlFor="lastname" className="form-label inline-block text-gray-700">Nom</label>
                         <input type="text"
@@ -102,6 +120,8 @@ const UserAddForm: FunctionComponent<IProps> = ({user, action}) => {
                                        className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-500 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                        id="isAdmin"/>
                             </label>
+                        </div>
+
                         <button type="submit"
                                 className="flex-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Submit
                         </button>
