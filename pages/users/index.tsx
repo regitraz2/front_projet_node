@@ -73,17 +73,17 @@ const UserList = () => {
     const [name, setName] = useState("");
     return (
         <BaseLayout title={"Users"}>
-            <div className="flex flex-col text-dark items-center px-6 py-8 mx-auto md:h-full lg:py-0">
+            <div className="flex flex-col text-black items-center px-6 py-8 mx-auto md:h-full lg:py-0">
                 <h1 className="text-3xl font-medium">Liste des collaborateurs</h1>
                 <div className="flex items-center px-4 py-3 bg-white border-b border-gray-200">
                     <input
-                        className="flex-1 px-4 py-2 mr-4 rounded-lg border border-gray-400"
+                        className="flex-1 px-4 py-2 mr-4 rounded-lg border border-gray-400 bg-white"
                         type="text"
                         placeholder="Rechercher par nom..."
                         onChange={e => setSearchNameUsers(e.target.value)}
                     />
                     <select
-                        className="px-4 py-2 mr-4 rounded-lg border border-gray-400"
+                        className="px-4 py-2 mr-4 rounded-lg border border-gray-400 bg-white"
                         onChange={e => setSearchUser(e.target.value)}
                     >
 
@@ -93,7 +93,7 @@ const UserList = () => {
 
                     </select>
                     <select
-                        className="px-4 py-2 rounded-lg border border-gray-400"
+                        className="px-4 py-2 rounded-lg border border-gray-400 bg-white"
                         onChange={e => setSearchCategoryUsers(e.target.value)}
                     >
                         <option>Toutes les catégories</option>
