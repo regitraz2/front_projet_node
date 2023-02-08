@@ -27,7 +27,7 @@ const Menu = () => {
                             </div>
                         </div>
                         <div className="flex items-center space-x-3 ">
-                            <a href={"/users/" + user?.id}
+                            <a href={"/users/" + user?._id}
                                className="py-2 px-2 font-medium text-gray-500">
                                 <img src={user && user.photo} width={"35px"} height={"35px"} className={'rounded-2xl'}/>
                             </a>

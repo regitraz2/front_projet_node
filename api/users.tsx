@@ -29,11 +29,7 @@ export function addOneUser(user: IUser) {
 }
 
 export function deleteOneUser(id: number | undefined) {
-    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users',
-        {
-            params: {
-                id: id
-            },
+    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users/' + id, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
                 "Content-Type": "application/json",
