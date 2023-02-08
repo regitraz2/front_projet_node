@@ -50,7 +50,7 @@ const UserList = () => {
         const instance = axios.create({
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer test`
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
             }
         });
 

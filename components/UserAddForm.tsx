@@ -1,5 +1,6 @@
 import {FunctionComponent} from "react";
 import {IUser} from "@/interfaces/IUser";
+import {addOneUser} from "@/api/users";
 
 interface IProps {
     user?: IUser;
@@ -7,7 +8,9 @@ interface IProps {
 
 const UserAddForm: FunctionComponent<IProps> = ({user}) => {
     const addUser = async (e: any) => {
+        console.log('e : ', e)
         e.preventDefault()
+
         const data = {
             email: e.target.email.value,
             password: e.target.password.value,
@@ -23,7 +26,7 @@ const UserAddForm: FunctionComponent<IProps> = ({user}) => {
             isAdmin: e.target.isAdmin.value,
         }
 
-        addUser(data)
+        addOneUser(data)
     }
 
     return (
@@ -118,6 +121,7 @@ const UserAddForm: FunctionComponent<IProps> = ({user}) => {
                                 Admin
                                 <input type="checkbox"
                                        className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-500 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                       value={1}
                                        id="isAdmin"/>
                             </label>
                         </div>

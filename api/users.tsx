@@ -11,7 +11,7 @@ export function getRandomUser() {
         .catch(err => console.log(err));
 }
 
-export function addUser(user: IUser) {
+export function addOneUser(user: IUser) {
     axios.post(
         process.env.NEXT_PUBLIC_API_URL + '/users',
         user,
