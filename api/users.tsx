@@ -27,3 +27,17 @@ export function addOneUser(user: IUser) {
             console.log('err : ', err)
         })
 }
+
+export function deleteOneUser(id: string) {
+    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users',
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+                "Content-Type": "application/json",
+            }
+        }
+    ).catch((err) => {
+            console.log('err : ', err)
+        }
+    )
+}

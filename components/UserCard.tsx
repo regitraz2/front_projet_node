@@ -8,7 +8,6 @@ interface IProps {
 }
 
 const UserCard: FunctionComponent<IProps> = ({user}) => {
-    console.log(user);
 
     return (
         <div className="max-w-md py-4 px-8 m-4 bg-white shadow-lg rounded-lg my-20">
