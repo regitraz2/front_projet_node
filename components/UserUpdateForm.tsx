@@ -11,7 +11,7 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     const router = useRouter()
     
-    const [userUpdate, setUserUpdate] = useState(user)
+    const [userUpdate, setUserUpdate] = useState()
 
     const addUser = async (e: any) => {
         console.log('e : ', e)
@@ -37,7 +37,7 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
     }
 
     useEffect(() => {
-
+        setUserUpdate(user)
     if(!user?.isAdmin){
     return;
     }
@@ -46,8 +46,12 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     if(router.query.id && user._id != router?.query.id){
 
-        const response =  getUserById(router.query.id)
-      
+        if (router.query.id && user._id != router?.query.id) {
+            getUserById(router.query.id).then((response) => {
+                console.log(response.firstname)
+                setUserUpdate(response)
+            });
+        }
     }
 
     }, [router]);

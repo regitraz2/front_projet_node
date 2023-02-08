@@ -47,7 +47,7 @@ export function updateOneUser(user: IUser) {
 }
 
 export async function getUserById(UserId:string){
-     await axios.get(
+   const response =  await axios.get(
         process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
         {
             headers: {
@@ -61,6 +61,6 @@ export async function getUserById(UserId:string){
             console.log('err : ', err)
         })
 
-    
+        return response;
 
 }
