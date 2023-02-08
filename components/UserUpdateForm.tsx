@@ -1,6 +1,6 @@
 import {FunctionComponent, useEffect, useState} from "react";
 import {IUser} from "@/interfaces/IUser";
-import {addOneUser,getUserById,updateOneUser} from "@/api/users";
+import {getUserById, updateOneUser} from "@/api/users";
 import {useRouter} from "next/router";
 
 interface IProps {
@@ -10,15 +10,16 @@ interface IProps {
 const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     const router = useRouter()
-    
+
     const [userUpdate, setUserUpdate] = useState()
+
 
     const addUser = async (e: any) => {
         console.log('e : ', e)
         e.preventDefault()
 
         const data = {
-            _id:userUpdate?._id,
+            _id: userUpdate?._id,
             email: e.target.email.value,
             password: e.target.password.value,
             firstname: e.target.firstname.value,
@@ -26,7 +27,7 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
             country: e.target.country.value,
             city: e.target.city.value,
             category: e.target.category.value,
-            gender: e.target.gender.value === "Mr" ? "male" : "female" ,
+            gender: e.target.gender.value === "Mr" ? "male" : "female",
             birthdate: e.target.birthdate.value,
             phone: e.target.phone.value,
             photo: e.target.photo.value,
@@ -38,31 +39,31 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     useEffect(() => {
         setUserUpdate(user)
-    if(!user?.isAdmin){
-    return;
-    }
+        if (!user?.isAdmin) {
+            return;
+        }
         console.log('router.query.id : ', router.query.id);
-        
 
-    if(router.query.id && user._id != router?.query.id){
 
         if (router.query.id && user._id != router?.query.id) {
-            getUserById(router.query.id).then((response) => {
-                console.log(response.firstname)
-                setUserUpdate(response)
-            });
+
+            if (router.query.id && user._id != router?.query.id) {
+                getUserById(router.query.id).then((response) => {
+                    console.log(response.firstname)
+                    setUserUpdate(response)
+                });
+            }
         }
-    }
 
     }, [router]);
 
 
-
-
     return (
-        <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div className="block p-6 rounded-lg shadow-lg bg-white">
-                <form onSubmit={addUser} className={"w-96"}>
+        <div className="flex-row w-auto items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
+            <div className="block p-6 shadow-lg bg-white">
+                <form onSubmit={addUser} className={"w-96 mx-auto"}>
+                    <h1 className="text-xl leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5"> Updater
+                        un utilisateur </h1>
                     <div className="form-group mb-3">
                         <label htmlFor="lastname" className="form-label inline-block text-gray-700">Nom</label>
                         <input type="text"
@@ -82,7 +83,7 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
                                className="form-label inline-block text-gray-700 mr-2">Genre</label>
                         <select id={"gender"}
                                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                            <option selected={userUpdate?.gender === "male" ? true : false}  >Mr</option>
+                            <option selected={userUpdate?.gender === "male" ? true : false}>Mr</option>
                             <option selected={userUpdate?.gender != "male" ? true : false}>Mme</option>
                         </select>
                     </div>
@@ -152,7 +153,7 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
                                 <input type="checkbox"
                                        className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-500 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                        value={1}
-                                       id="isAdmin" />
+                                       id="isAdmin"/>
                             </label>
                         </div>
 
