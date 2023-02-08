@@ -5,7 +5,7 @@ import {getRandomUser} from "@/api/users";
 
 const Dashboard = () => {
     const {data, isLoading, refetch} = useQuery(
-        ['projects'],
+        ['randomUser'],
         () => getRandomUser(),
     )
 
