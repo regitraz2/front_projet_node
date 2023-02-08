@@ -28,15 +28,39 @@ export function addOneUser(user: IUser) {
         })
 }
 
-export function deleteOneUser(id: number | undefined) {
-    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users/' + id, {
+export function updateOneUser(user: IUser) {
+    axios.post(
+        process.env.NEXT_PUBLIC_API_URL + '/updateUser',
+        user,
+        {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
                 "Content-Type": "application/json",
             }
         }
-    ).catch((err) => {
+     )
+        .then((res) => res.data)
+        .catch((err) => {
             console.log('err : ', err)
+        })
+
+}
+
+export async function getUserById(UserId:string){
+     await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+                "Content-Type": "application/json",
+            }
         }
-    )
+     )
+        .then((res) => res.data)
+        .catch((err) => {
+            console.log('err : ', err)
+        })
+
+    
+
 }
