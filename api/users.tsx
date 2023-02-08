@@ -38,16 +38,15 @@ export function updateOneUser(user: IUser) {
                 "Content-Type": "application/json",
             }
         }
-     )
+    )
         .then((res) => res.data)
         .catch((err) => {
             console.log('err : ', err)
         })
-
 }
 
 export async function getUserById(UserId:string){
-   const response =  await axios.get(
+     await axios.get(
         process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
         {
             headers: {
@@ -55,12 +54,13 @@ export async function getUserById(UserId:string){
                 "Content-Type": "application/json",
             }
         }
-     )
+    )
         .then((res) => res.data)
         .catch((err) => {
             console.log('err : ', err)
         })
+}
 
-        return response;
+    
 
 }
