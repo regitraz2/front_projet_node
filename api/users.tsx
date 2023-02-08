@@ -46,7 +46,7 @@ export function updateOneUser(user: IUser) {
 }
 
 export async function getUserById(UserId:string){
-     await axios.get(
+    const response = await axios.get(
         process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
         {
             headers: {
@@ -59,8 +59,20 @@ export async function getUserById(UserId:string){
         .catch((err) => {
             console.log('err : ', err)
         })
+    return response
 }
 
-    
 
-}
+
+export function deleteOneUser(id: string) {
+    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users/' + id,
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+                "Content-Type": "application/json",
+            }
+        }).then((res) => res.data)
+        .catch((err) => console.log('err : ', err))
+
+
+    }
