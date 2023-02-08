@@ -30,9 +30,11 @@ const UserAddForm: FunctionComponent<IProps> = ({user}) => {
     }
 
     return (
-        <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div className="block p-6 rounded-lg shadow-lg bg-white">
-                <form onSubmit={addUser} className={"w-96"}>
+        <div className="flex-row w-auto items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
+            <div className="block p-6 shadow-lg bg-white">
+                <form onSubmit={addUser} className={"w-96 mx-auto mb-10"}>
+                    <h1 className="text-xl leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5"> Ajouter
+                        un utilisateur </h1>
                     <div className="form-group mb-3">
                         <label htmlFor="lastname" className="form-label inline-block text-gray-700">Nom</label>
                         <input type="text"

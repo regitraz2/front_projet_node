@@ -5,7 +5,7 @@ const AddUserPage = () => {
 
     return (
         <BaseLayout title={"Ajouter un Utilisateur"}>
-            <UserAddForm action={"/users/add"}/>
+            <UserAddForm/>
         </BaseLayout>
     )
 }

@@ -6,11 +6,9 @@ import UserCard from "@/components/UserCard";
 import BaseLayout from "@/components/BaseLayout";
 
 const UserList = () => {
-
     const [users, setUsers] = useState([]);
     const [newUsers, setNewUsers] = useState([]);
     const [searchBy, setSearchBy] = useState("firstname");
-    const [searchCategory, setSearchCategory] = useState("");
     let newFilterUsers = [];
 
     const setSearchUser = (searchBy: string) => {
@@ -29,8 +27,6 @@ const UserList = () => {
                 })
                 setUsers(newFilterUsers)
             }
-
-
         } else {
             await getUsers()
         }
@@ -77,7 +73,7 @@ const UserList = () => {
     const [name, setName] = useState("");
     return (
         <BaseLayout title={"Users"}>
-            <div className="flex flex-col text-dark items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div className="flex flex-col text-dark items-center px-6 py-8 mx-auto md:h-full lg:py-0">
                 <h1 className="text-3xl font-medium">Liste des collaborateurs</h1>
                 <div className="flex items-center px-4 py-3 bg-white border-b border-gray-200">
                     <input

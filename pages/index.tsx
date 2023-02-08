@@ -13,7 +13,7 @@ const Dashboard = () => {
         <>
             <BaseLayout title={"Dashboard"}>
                 <div
-                    className="flex flex-col text-black items-center justify-center px-6 mx-auto md:h-screen lg:py-     0">
+                    className="flex flex-col text-black items-center justify-center px-6 mx-auto md:h-full lg:py-0">
                     <div className={"my-5 text-3xl"}>Bienvenue sur l'Intranet !</div>
                     <div className={"my-5"}>La plateforme qui vous permet de retrouver tout vo collaborateurs !</div>
                     <div
