@@ -17,7 +17,7 @@ const UserCard: FunctionComponent<IProps> = ({user}) => {
     const authenticatedUser = useRecoilValue(authUser)
 
     const handleDelete = () => {
-        deleteOneUser(user._id)
+        deleteOneUser(user._id as string)
         router.reload()
     }
 

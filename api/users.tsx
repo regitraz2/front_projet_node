@@ -38,16 +38,15 @@ export function updateOneUser(user: IUser) {
                 "Content-Type": "application/json",
             }
         }
-     )
+    )
         .then((res) => res.data)
         .catch((err) => {
             console.log('err : ', err)
         })
-
 }
 
-export async function getUserById(UserId:string){
-     await axios.get(
+export async function getUserById(UserId: string) {
+    await axios.get(
         process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
         {
             headers: {
@@ -55,12 +54,20 @@ export async function getUserById(UserId:string){
                 "Content-Type": "application/json",
             }
         }
-     )
+    )
         .then((res) => res.data)
         .catch((err) => {
             console.log('err : ', err)
         })
+}
 
-    
-
+export function deleteOneUser(id: string) {
+    axios.delete(process.env.NEXT_PUBLIC_API_URL + '/users/' + id,
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+                "Content-Type": "application/json",
+            }
+        }).then((res) => res.data)
+        .catch((err) => console.log('err : ', err))
 }
