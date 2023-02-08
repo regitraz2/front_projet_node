@@ -17,7 +17,7 @@ const BaseLayout = ({children, title}: IProps) => {
                 <title>{process.env.NEXT_PUBLIC_APP_NAME} - {title}</title>
             </Head>
 
-            <body className="flex flex-col bg-slate-100">
+            <body className="flex flex-col bg-slate-100 h-screen">
             {router.pathname !== '/auth/login' && <Menu/>}
             <div className="flex-row my-10">
                 {children}
