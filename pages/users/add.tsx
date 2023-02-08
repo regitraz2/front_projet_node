@@ -1,11 +1,11 @@
 import BaseLayout from "@/components/BaseLayout";
-import UserForm from "@/components/UserForm";
+import UserAddForm from "@/components/UserAddForm";
 
 const AddUserPage = () => {
 
     return (
         <BaseLayout title={"Ajouter un Utilisateur"}>
-            <UserForm action={"/users/add"}/>
+            <UserAddForm action={"/users/add"}/>
         </BaseLayout>
     )
 }

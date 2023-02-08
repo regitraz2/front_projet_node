@@ -6,7 +6,7 @@ interface IProps {
     action: string
 }
 
-const UserForm: FunctionComponent<IProps> = ({user, action}) => {
+const UserAddForm: FunctionComponent<IProps> = ({user, action}) => {
 
     return (
         <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -113,4 +113,4 @@ const UserForm: FunctionComponent<IProps> = ({user, action}) => {
     )
 }
 
-export default UserForm;
+export default UserAddForm;
