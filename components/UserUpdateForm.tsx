@@ -46,14 +46,12 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     if(router.query.id && user._id != router?.query.id){
 
-
-    
-   const response = getUserById(router.query.id)
-  
-
+        const response =  getUserById(router.query.id)
+      
     }
 
     }, [router]);
+
 
 
 
