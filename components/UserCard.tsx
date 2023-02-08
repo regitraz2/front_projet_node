@@ -2,12 +2,19 @@ import {IUser} from "@/interfaces/IUser";
 import DateDiff from "date-diff";
 import {FunctionComponent} from 'react'
 import Image from "next/image";
+import {useRouter} from "next/router";
+import {deleteOneUser} from "@/api/users";
 
 interface IProps {
     user: IUser
 }
 
 const UserCard: FunctionComponent<IProps> = ({user}) => {
+    const router = useRouter()
+
+    const handleDelete = () => {
+        deleteOneUser(user._id)
+    }
 
     return (
         <div className="max-w-md py-4 px-8 m-4 bg-white shadow-lg rounded-lg my-20">
@@ -55,6 +62,20 @@ const UserCard: FunctionComponent<IProps> = ({user}) => {
                 />
                 {"Anniversaire : " + new Date(user?.birthdate).toDateString()}
             </div>
+
+            {/*{user.isAdmin &&*/}
+            <div className="flex justify-start md:justify-start text-black mt-2">
+                <button onClick={handleDelete}
+                        className={"flex-col w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"}>
+                    Supprimer
+                </button>
+
+                <button onClick={() => router.push(`/users/${user._id}`)}
+                        className={"flex-col mx-3 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"}>
+                    Editer
+                </button>
+            </div>
+            {/*}*/}
         </div>
     )
 };

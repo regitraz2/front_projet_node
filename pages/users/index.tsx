@@ -75,7 +75,7 @@ const UserList = () => {
         <BaseLayout title={"Users"}>
             <div className="flex flex-col text-black items-center px-6 py-8 mx-auto md:h-full lg:py-0">
                 <h1 className="text-3xl font-medium">Liste des collaborateurs</h1>
-                <div className="flex items-center px-4 py-3 bg-white border-b border-gray-200">
+                <div className="flex items-center px-4 py-3 bg-white border-b border-gray-200 rounded">
                     <input
                         className="flex-1 px-4 py-2 mr-4 rounded-lg border border-gray-400 bg-white"
                         type="text"
@@ -103,11 +103,9 @@ const UserList = () => {
                     </select>
                 </div>
                 <div className="flex flex-col items-center">
-
-
                     <div className="flex flex-wrap justify-center">
                         {users.map((user: IUser) => (
-                            <UserCard key={user.id} user={user}/>
+                            <UserCard key={user._id} user={user}/>
                         ))}
                     </div>
                 </div>
