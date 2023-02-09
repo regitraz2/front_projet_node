@@ -1,12 +1,11 @@
-import {useState} from "react";
-import { FunctionComponent, useEffect, } from "react";
+import {useEffect, useState} from "react";
 
 import {useRouter} from "next/router";
 import * as process from "process";
 import axios from "axios";
 import {useSetRecoilState} from "recoil";
 import {authUser} from "@/recoil/user";
-import { useFlashMessage } from "@/components/useFlashMessage";
+import {useFlashMessage} from "@/components/useFlashMessage";
 
 
 const LoginForm = () => {
@@ -31,7 +30,7 @@ const LoginForm = () => {
             .then(() => router.push('/'))
             .catch((err) => {
                 console.log('err : ', err)
-                flashMessage.show(`${err.response.data}`,"red");
+                flashMessage.show(`${err.response.data.message}`, "red");
 
             })
     }
@@ -43,14 +42,14 @@ const LoginForm = () => {
     useEffect(() => {
         let timeoutId: number;
         if (flashMessage.isVisible) {
-          timeoutId = setTimeout(() => {
-            flashMessage.hide();
-          }, 5000);
+            timeoutId = setTimeout(() => {
+                flashMessage.hide();
+            }, 5000);
         }
         return () => {
-          clearTimeout(timeoutId);
+            clearTimeout(timeoutId);
         };
-      }, [flashMessage.isVisible, flashMessage.hide]);
+    }, [flashMessage.isVisible, flashMessage.hide]);
     return (
         <>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
@@ -84,10 +83,13 @@ const LoginForm = () => {
                                 Connexion
                             </button>
                             {flashMessage.isVisible && (
-                        <div style={flashMessage.isVisible ? {...styles.flashMessage,backgroundColor:flashMessage.color} : styles.hide}>
-                            <p>{flashMessage.message}</p>
-                        </div>
-                    )}
+                                <div style={flashMessage.isVisible ? {
+                                    ...styles.flashMessage,
+                                    backgroundColor: flashMessage.color
+                                } : styles.hide}>
+                                    <p>{flashMessage.message}</p>
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
@@ -98,19 +100,19 @@ const LoginForm = () => {
 
 const styles = {
     flashMessage: {
-      position: "fixed",
-      top: "0%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      backgroundColor: "lightgreen",
-      padding: "20px",
-      borderRadius: "5px",
-      boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
-      textAlign: "center"
+        position: "fixed",
+        top: "0%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "lightgreen",
+        padding: "20px",
+        borderRadius: "5px",
+        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
+        textAlign: "center"
     },
     hide: {
-      display: "none"
+        display: "none"
     }
-  };
+};
 
 export default LoginForm
