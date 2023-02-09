@@ -12,10 +12,9 @@ interface IProps {
 const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     const router = useRouter()
-    const setAuthUser = useSetRecoilState(authUser)
-
-    const [userUpdate, setUserUpdate] = useState()
     const authenticatedUser = useRecoilValue(authUser)
+    const setAuthUser = useSetRecoilState(authUser)
+    const [userUpdate, setUserUpdate] = useState()
 
     const updateUser = async (e: any) => {
         console.log('e : ', e)
@@ -38,26 +37,26 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
         }
 
         updateOneUser(data).then((res) => {
+            console.log('new auth user : ', res.user)
+            if (router.query.id && authenticatedUser._id == router.query.id) {
+                setAuthUser(res.user)
+            }
             //flash message
         })
     }
 
     useEffect(() => {
         setUserUpdate(user)
-        if (!authenticatedUser?.isAdmin) {
+        if (!authenticatedUser?.isAdmin)
             return;
-        }
-
-        console.log('router.query.id : ', router.query.id);
-
-        if (router.query.id && user._id != router?.query.id) {
+        
+        if (router.query.id && user?._id != router?.query.id) {
             getUserById(router.query.id).then((response) => {
                 console.log('response : ', response);
                 setUserUpdate(response)
             });
         }
     }, [router]);
-
 
     return (
         <div className="flex-row w-auto items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
