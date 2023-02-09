@@ -17,9 +17,7 @@ const LoginForm = () => {
             process.env.NEXT_PUBLIC_API_URL + '/login',
             {email, password}
         )
-            .then((res) => {
-                return res.data
-            })
+            .then((res) => res.data)
             .then((res) => {
                 // Set the access token in the local storage
                 setAuthUser(res.user)
