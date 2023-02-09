@@ -1,13 +1,18 @@
 import {useState} from "react";
+import { FunctionComponent, useEffect, } from "react";
+
 import {useRouter} from "next/router";
 import * as process from "process";
 import axios from "axios";
 import {useSetRecoilState} from "recoil";
 import {authUser} from "@/recoil/user";
+import { useFlashMessage } from "@/components/useFlashMessage";
 
 
 const LoginForm = () => {
     const [error, setError] = useState<string | undefined>(undefined)
+    const flashMessage = useFlashMessage();
+
     const router = useRouter()
     const setAuthUser = useSetRecoilState(authUser)
     const login = async (email: string, password: string) => {
@@ -26,6 +31,8 @@ const LoginForm = () => {
             .then(() => router.push('/'))
             .catch((err) => {
                 console.log('err : ', err)
+                flashMessage.show(`${err.response.data}`,"red");
+
             })
     }
 
@@ -33,7 +40,17 @@ const LoginForm = () => {
         e.preventDefault()
         login(e.target.email.value, e.target.password.value)
     }
-
+    useEffect(() => {
+        let timeoutId: number;
+        if (flashMessage.isVisible) {
+          timeoutId = setTimeout(() => {
+            flashMessage.hide();
+          }, 5000);
+        }
+        return () => {
+          clearTimeout(timeoutId);
+        };
+      }, [flashMessage.isVisible, flashMessage.hide]);
     return (
         <>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
@@ -66,6 +83,11 @@ const LoginForm = () => {
                                     className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                 Connexion
                             </button>
+                            {flashMessage.isVisible && (
+                        <div style={flashMessage.isVisible ? {...styles.flashMessage,backgroundColor:flashMessage.color} : styles.hide}>
+                            <p>{flashMessage.message}</p>
+                        </div>
+                    )}
                         </form>
                     </div>
                 </div>
@@ -73,5 +95,22 @@ const LoginForm = () => {
         </>
     )
 }
+
+const styles = {
+    flashMessage: {
+      position: "fixed",
+      top: "0%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "lightgreen",
+      padding: "20px",
+      borderRadius: "5px",
+      boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
+      textAlign: "center"
+    },
+    hide: {
+      display: "none"
+    }
+  };
 
 export default LoginForm

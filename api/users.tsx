@@ -12,7 +12,7 @@ export function getRandomUser() {
 }
 
 export function addOneUser(user: IUser) {
-    axios.post(
+   return axios.post(
         process.env.NEXT_PUBLIC_API_URL + '/users',
         user,
         {
@@ -21,11 +21,10 @@ export function addOneUser(user: IUser) {
                 "Content-Type": "application/json",
             }
         }
-    )
-        .then((res) => res.data)
-        .catch((err) => {
-            console.log('err : ', err)
-        })
+    ).then((res) => res)
+    .catch((err) => 
+            err
+        )
 }
 
 export function updateOneUser(user: IUser) {
@@ -37,8 +36,8 @@ export function updateOneUser(user: IUser) {
                 'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
                 "Content-Type": "application/json",
             }
-        }).then((res) => res.data)
-        .catch((err) => console.log('err : ', err))
+        }).then((res) => res)
+        .catch((err) => err)
 }
 
 export function getUserById(UserId: string) {

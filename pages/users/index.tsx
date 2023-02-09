@@ -9,6 +9,8 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [newUsers, setNewUsers] = useState([]);
     const [searchBy, setSearchBy] = useState("firstname");
+    const [categoryAcitve, setCategory] = useState("Toutes les catégories");
+
     let newFilterUsers = [];
 
     const setSearchUser = (searchBy: string) => {
@@ -18,6 +20,7 @@ const UserList = () => {
     };
 
     const setSearchCategoryUsers = async (category: string) => {
+        setCategory(category)
         if (category != "Toutes les catégories") {
 
             if (category != "Toutes les catégories") {
@@ -33,12 +36,22 @@ const UserList = () => {
     }
 
     const setSearchNameUsers = async (searchTerm: string) => {
+        if(categoryAcitve === "Toutes les catégories"){
         const Newusers = newUsers.filter((user) => {
-            console.log(searchBy)
             // @ts-ignore
             return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
         });
         setUsers(Newusers)
+        }else{
+            const newFilterUsers = newUsers.filter((user: IUser) => {
+                return user.category === categoryAcitve
+            })
+            const Newusers = newFilterUsers.filter((user) => {
+                // @ts-ignore
+                return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
+            });
+            setUsers(Newusers)
+        }
     };
 
 
