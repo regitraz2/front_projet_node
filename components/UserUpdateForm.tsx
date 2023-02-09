@@ -39,12 +39,14 @@ const UserUpdateForm: FunctionComponent<IProps> = ({ user }) => {
         }
         try{
         updateOneUser(data).then((res) => {
-            console.log('new auth user : ', res.user)
-            if (router.query.id && authenticatedUser._id == router.query.id) {
-                setAuthUser(res.user)
-            }
+            console.log('new auth user : ', res)
+
+
             //flash message
             if(res.status === 200){
+                if (router.query.id && authenticatedUser._id == router.query.id) {
+                    setAuthUser(res.data.user)
+                }
             flashMessage.show('Formulaire soumis avec succès!',"#33FF99");
             }else {
                 flashMessage.show(`${res.response.data.message}`,"#F08080");
@@ -69,6 +71,17 @@ const UserUpdateForm: FunctionComponent<IProps> = ({ user }) => {
         }
     }, [router]);
 
+    useEffect(() => {
+        let timeoutId: number;
+        if (flashMessage.isVisible) {
+          timeoutId = setTimeout(() => {
+            flashMessage.hide();
+          }, 5000);
+        }
+        return () => {
+          clearTimeout(timeoutId);
+        };
+      }, [flashMessage.isVisible, flashMessage.hide]);
 
     return (
         <div className="flex-row w-auto items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">

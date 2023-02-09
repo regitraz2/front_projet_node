@@ -70,7 +70,7 @@ const UserCard: FunctionComponent<IProps> = ({user}) => {
                 {"Anniversaire : " + new Date(user?.birthdate).toDateString()}
             </div>
 
-            {authenticatedUser.isAdmin &&
+            {authenticatedUser?.isAdmin &&
                 <div className="flex justify-start md:justify-start text-black mt-2">
                     <button onClick={handleDelete}
                             className={"flex-col w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"}>
