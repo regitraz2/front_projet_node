@@ -54,8 +54,8 @@ const UserAddForm: FunctionComponent<IProps> = ({user}) => {
                                className="form-label inline-block text-gray-700 mr-2">Genre</label>
                         <select id={"gender"}
                                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                            <option defaultChecked>Mr</option>
-                            <option>Mme</option>
+                            <option defaultChecked value={"male"}>Mr</option>
+                            <option value={"female"}>Mme</option>
                         </select>
                     </div>
 

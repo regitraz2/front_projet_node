@@ -29,7 +29,7 @@ export function addOneUser(user: IUser) {
 }
 
 export function updateOneUser(user: IUser) {
-    axios.post(
+    return axios.post(
         process.env.NEXT_PUBLIC_API_URL + '/updateUser',
         user,
         {
@@ -37,31 +37,21 @@ export function updateOneUser(user: IUser) {
                 'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
                 "Content-Type": "application/json",
             }
-        }
-    )
-        .then((res) => res.data)
-        .catch((err) => {
-            console.log('err : ', err)
-        })
+        }).then((res) => res.data)
+        .catch((err) => console.log('err : ', err))
 }
 
-export async function getUserById(UserId:string){
-    const response = await axios.get(
+export function getUserById(UserId: string) {
+    return axios.get(
         process.env.NEXT_PUBLIC_API_URL + '/users/' + UserId,
         {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
                 "Content-Type": "application/json",
             }
-        }
-    )
-        .then((res) => res.data)
-        .catch((err) => {
-            console.log('err : ', err)
-        })
-    return response
+        }).then((res) => res.data)
+        .catch((err) => console.log('err : ', err))
 }
-
 
 
 export function deleteOneUser(id: string) {
@@ -75,4 +65,4 @@ export function deleteOneUser(id: string) {
         .catch((err) => console.log('err : ', err))
 
 
-    }
+}

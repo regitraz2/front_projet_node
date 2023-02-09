@@ -2,6 +2,8 @@ import {FunctionComponent, useEffect, useState} from "react";
 import {IUser} from "@/interfaces/IUser";
 import {getUserById, updateOneUser} from "@/api/users";
 import {useRouter} from "next/router";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {authUser} from "@/recoil/user";
 
 interface IProps {
     user?: IUser;
@@ -10,11 +12,12 @@ interface IProps {
 const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
 
     const router = useRouter()
+    const setAuthUser = useSetRecoilState(authUser)
 
     const [userUpdate, setUserUpdate] = useState()
+    const authenticatedUser = useRecoilValue(authUser)
 
-
-    const addUser = async (e: any) => {
+    const updateUser = async (e: any) => {
         console.log('e : ', e)
         e.preventDefault()
 
@@ -34,35 +37,33 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
             isAdmin: e.target.isAdmin.value,
         }
 
-        updateOneUser(data)
+        updateOneUser(data).then((res) => {
+            //flash message
+        })
     }
 
     useEffect(() => {
         setUserUpdate(user)
-        if (!user?.isAdmin) {
+        if (!authenticatedUser?.isAdmin) {
             return;
         }
+
         console.log('router.query.id : ', router.query.id);
 
-
         if (router.query.id && user._id != router?.query.id) {
-
-            if (router.query.id && user._id != router?.query.id) {
-                getUserById(router.query.id).then((response) => {
-                    console.log(response.firstname)
-                    setUserUpdate(response)
-                });
-            }
+            getUserById(router.query.id).then((response) => {
+                console.log('response : ', response);
+                setUserUpdate(response)
+            });
         }
-
     }, [router]);
 
 
     return (
         <div className="flex-row w-auto items-center justify-center px-6 py-8 mx-auto md:h-full lg:py-0">
             <div className="block p-6 shadow-lg bg-white">
-                <form onSubmit={addUser} className={"w-96 mx-auto"}>
-                    <h1 className="text-xl leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5"> Updater
+                <form onSubmit={updateUser} className={"w-96 mx-auto"}>
+                    <h1 className="text-xl leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5"> Modifier
                         un utilisateur </h1>
                     <div className="form-group mb-3">
                         <label htmlFor="lastname" className="form-label inline-block text-gray-700">Nom</label>
@@ -147,18 +148,21 @@ const UserUpdateForm: FunctionComponent<IProps> = ({user}) => {
                     </div>
 
                     <div className={"flex flex-row justify-center"}>
-                        <div className="flex-1 form-group form-check mb-3 mx-auto">
-                            <label className="form-check-label inline-block text-gray-800" htmlFor="isAdmin">
-                                Admin
-                                <input type="checkbox"
-                                       className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-500 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                       value={1}
-                                       id="isAdmin"/>
-                            </label>
-                        </div>
+                        {authenticatedUser?.isAdmin &&
+                            <div className="flex-1 form-group form-check mb-3 mx-auto">
+                                <label className="form-check-label inline-block text-gray-800" htmlFor="isAdmin">
+                                    Admin
+                                    <input type="checkbox"
+                                           className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-500 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                           value={1}
+                                           id="isAdmin"/>
+                                </label>
+                            </div>
+                        }
 
                         <button type="submit"
-                                className="flex-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Submit
+                                className="flex-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            Envoyer
                         </button>
                     </div>
                 </form>
