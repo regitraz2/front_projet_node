@@ -9,6 +9,7 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [newUsers, setNewUsers] = useState([]);
     const [searchBy, setSearchBy] = useState("firstname");
+    const [categories, setCategories] = useState(new Set());
     const [categoryAcitve, setCategory] = useState("Toutes les catégories");
 
     let newFilterUsers = [];
@@ -33,16 +34,25 @@ const UserList = () => {
         } else {
             await getUsers()
         }
+    };
+
+    const getAllCategories = () => {
+        const cat = new Set(newUsers.map((user: IUser) => {
+            return user.category
+        }))
+
+        setCategories(cat)
+        console.log(categories)
     }
 
     const setSearchNameUsers = async (searchTerm: string) => {
-        if(categoryAcitve === "Toutes les catégories"){
-        const Newusers = newUsers.filter((user) => {
-            // @ts-ignore
-            return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
-        });
-        setUsers(Newusers)
-        }else{
+        if (categoryAcitve === "Toutes les catégories") {
+            const Newusers = newUsers.filter((user) => {
+                // @ts-ignore
+                return user[`${searchBy}`].toLowerCase().includes(searchTerm.toLowerCase());
+            });
+            setUsers(Newusers)
+        } else {
             const newFilterUsers = newUsers.filter((user: IUser) => {
                 return user.category === categoryAcitve
             })
@@ -83,6 +93,10 @@ const UserList = () => {
         getUsers();
     }, []);
 
+    useEffect(() => {
+        getAllCategories()
+    }, [users]);
+
     const [name, setName] = useState("");
     return (
         <BaseLayout title={"Users"}>
@@ -109,10 +123,10 @@ const UserList = () => {
                         className="px-4 py-2 rounded-lg border border-gray-400 bg-white"
                         onChange={e => setSearchCategoryUsers(e.target.value)}
                     >
-                        <option>Toutes les catégories</option>
-                        <option>Marketing</option>
-                        <option>Technique</option>
-                        <option>Client</option>
+                        <option selected={true}>Toutes les catégories</option>
+                        {Array.from(categories).map((category, index) => {
+                            return <option key={index}>{category}</option>
+                        })}
                     </select>
                 </div>
                 <div className="flex flex-col items-center">
